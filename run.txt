@@ -1,0 +1,45 @@
+# SaaS API Run Instructions
+
+## 1. Environment Setup
+Ensure you have a `.env` file in the root directory with correct database credentials.
+Copy `.env.example` if available.
+
+## 2. Install Dependencies
+```bash
+go mod tidy
+```
+
+## 3. Database Seeding
+Initialize the database with default roles, an admin user, and organizational data.
+```bash
+go run cmd/seed/main.go
+```
+
+### Generate/Refresh Spec
+**You do NOT need to run swag init anymore.**
+The API documentation is generated dynamically at runtime.
+
+### Access UI
+Once the app is running, go to:
+`http://localhost:8080/swagger-ui/index.html`
+
+## 4. Run the Application
+### Option A: With Hot Reload (Recommended)
+```powershell
+.\run.ps1
+```
+
+### Option B: Standard Run
+```bash
+go run .
+```
+
+### Access UI
+Once the app is running, go to:
+`http://localhost:8080/swagger-ui/index.html`
+
+## 6. Project Structure
+- `core/`: Base classes and `base_route.go` (The Route Generator).
+- `modules/`: Feature-specific modules with clean, logic-only controllers.
+- `shared/utils/swagger.go`: The Dynamic Swagger Registry.
+- `cmd/seed/`: Database initialization tool.
