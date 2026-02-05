@@ -7,6 +7,7 @@ import (
 	"saas-api/modules/branch"
 	"saas-api/modules/department"
 	"saas-api/modules/employee"
+	"saas-api/modules/patient"
 	"saas-api/modules/position"
 	"saas-api/modules/user"
 	"saas-api/shared/database"
@@ -32,6 +33,7 @@ func main() {
 		&department.Department{},
 		&position.Position{},
 		&employee.Employee{},
+		&patient.Patient{},
 	)
 	if err != nil {
 		log.Fatalf("Failed to migrate database: %v", err)

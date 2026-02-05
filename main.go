@@ -3,10 +3,12 @@ package main
 import (
 	"log"
 	"saas-api/core"
+	"saas-api/modules/allergy"
 	"saas-api/modules/auth"
 	"saas-api/modules/branch"
 	"saas-api/modules/department"
 	"saas-api/modules/employee"
+	"saas-api/modules/patient"
 	"saas-api/modules/position"
 	"saas-api/modules/user"
 
@@ -25,10 +27,12 @@ func main() {
 	// Register Modules
 	app.RegisterModule(auth.NewModule())
 	app.RegisterModule(user.NewModule())
+	app.RegisterModule(allergy.NewModule())
 	app.RegisterModule(branch.NewModule())
 	app.RegisterModule(department.NewModule())
 	app.RegisterModule(position.NewModule())
 	app.RegisterModule(employee.NewModule())
+	app.RegisterModule(patient.NewModule())
 
 	// Initialize and Run
 	app.Init()
