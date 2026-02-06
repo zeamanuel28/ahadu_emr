@@ -2,6 +2,8 @@ package allergy
 
 import (
 	"saas-api/core"
+
+	"github.com/google/uuid"
 )
 
 // Severity represents the severity level of an allergy
@@ -31,10 +33,9 @@ type AllergyReaction struct {
 type Allergy struct {
 	core.BaseModel
 
-	PatientID     string `gorm:"not null;index" json:"patient_id_no"`
-	AllergyNameID uint   `gorm:"not null;index" json:"allergy_name_id"`
+	PatientID     string    `gorm:"column:patient_id_no;not null;index" json:"patient_id_no"`
 
-	
+	AllergyNameID uuid.UUID `gorm:"column:allergy_name_id;not null;index" json:"allergy_name_id"`
 	AllergyName *AllergyName       `json:"allergy_name,omitempty" gorm:"foreignKey:AllergyNameID"`
 	Reactions   []*AllergyReaction `json:"reactions,omitempty" gorm:"many2many:allergy_allergy_reactions;"`
 

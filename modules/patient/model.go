@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"saas-api/core"
-	"saas-api/modules/allergy"
+	"saas-api/modules/patient_allergy"
 
 	"gorm.io/gorm"
 )
@@ -61,7 +61,7 @@ type Patient struct {
 	Status                   string                   `gorm:"type:varchar(10);default:ACTIVE" json:"status"` // ACTIVE | INACTIVE | DECEASED
 
 	// Relationships - One patient can have many allergies
-	Allergies []allergy.Allergy `json:"allergies,omitempty" gorm:"foreignKey:PatientID;references:IDNo"`
+	Allergies []patient_allergy.Allergy `json:"allergies,omitempty" gorm:"foreignKey:PatientID;references:IDNo"`
 }
 
 // BeforeCreate hook to generate MRN

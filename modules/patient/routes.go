@@ -10,6 +10,8 @@ import (
 func RegisterRoutes(parentGroup *gin.RouterGroup, controller *PatientController) {
 	group := parentGroup.Group("/patients")
 	group.Use(middleware.AuthMiddleware())
+
+	// Register base CRUD routes
 	baseRoute := core.NewBaseRoute[Patient, CreatePatientDTO, UpdatePatientDTO](controller)
 	baseRoute.Register(group, core.RouteOptions{
 		Tag:            "Patients",
