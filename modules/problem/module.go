@@ -1,4 +1,4 @@
-package visit
+package problem
 
 import (
 	"github.com/gin-gonic/gin"
@@ -6,7 +6,7 @@ import (
 )
 
 type Module struct {
-	Controller *VisitController
+	Controller *ProblemController
 }
 
 func NewModule() *Module {
@@ -14,8 +14,8 @@ func NewModule() *Module {
 }
 
 func (m *Module) Init(db *gorm.DB) {
-	visitService := NewVisitService(db)
-	m.Controller = NewVisitController(visitService)
+	service := NewProblemService(db)
+	m.Controller = NewProblemController(service)
 }
 
 func (m *Module) RegisterRoutes(parentGroup *gin.RouterGroup) {
@@ -24,6 +24,6 @@ func (m *Module) RegisterRoutes(parentGroup *gin.RouterGroup) {
 
 func (m *Module) GetModels() []interface{} {
 	return []interface{}{
-		&Visit{},
+		&Problem{},
 	}
 }

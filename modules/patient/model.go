@@ -6,6 +6,7 @@ import (
 
 	"saas-api/core"
 	"saas-api/modules/patient_allergy"
+	"saas-api/modules/problem"
 
 	"gorm.io/gorm"
 )
@@ -62,6 +63,7 @@ type Patient struct {
 
 	// Relationships - One patient can have many allergies
 	Allergies []patient_allergy.Allergy `json:"allergies,omitempty" gorm:"foreignKey:PatientID;references:IDNo"`
+	Problems  []problem.Problem         `json:"problems,omitempty" gorm:"foreignKey:PatientID"`
 }
 
 // BeforeCreate hook to generate MRN

@@ -2,8 +2,12 @@ package visit
 
 import (
 	"saas-api/core"
+	"saas-api/modules/diagnosis"
+	"saas-api/modules/disposition"
+	"saas-api/modules/observation"
+	"saas-api/modules/vital_record"
 
-	"gorm.io/datatypes"
+	"github.com/google/uuid"
 )
 
 type VisitType string
@@ -33,32 +37,16 @@ const (
 type Visit struct {
 	core.BaseModel
 
-	PatientIDNo string `gorm:"not null;index" json:"patient_id_no"`
+	PatientIDNo string `gorm:"column:patient_id_no;not null;index" json:"patient_id_no"`
 
 	Type     VisitType   `gorm:"type:varchar(20);not null" json:"type"`
 	Status   VisitStatus `gorm:"type:varchar(20);not null;default:WAITING" json:"status"`
 	Severity Severity    `gorm:"type:varchar(20);not null" json:"severity"`
 
-	DepartmentID *string `json:"department_id,omitempty"`
+	DepartmentID *uuid.UUID `gorm:"type:uuid" json:"department_id,omitempty"`
 
-	Observations []Observation `gorm:"foreignKey:VisitID;constraint:OnDelete:CASCADE" json:"observations,omitempty"`
-	Vitals       []VitalRecord `gorm:"foreignKey:VisitID;constraint:OnDelete:CASCADE" json:"vitals,omitempty"`
-}
-
-type Observation struct {
-	core.BaseModel
-
-	VisitID string `gorm:"not null;index" json:"visit_id"`
-
-	ChiefComplaintID string `gorm:"not null" json:"chief_complaint_id"`
-
-	Note *string `json:"note,omitempty"`
-}
-
-type VitalRecord struct {
-	core.BaseModel
-
-	VisitID string `gorm:"not null;index" json:"visit_id"`
-
-	Values datatypes.JSON `gorm:"type:jsonb" json:"values"`
+	Observations []observation.Observation  `gorm:"foreignKey:VisitID;constraint:OnDelete:CASCADE" json:"observations,omitempty"`
+	Vitals       []vital_record.VitalRecord `gorm:"foreignKey:VisitID;constraint:OnDelete:CASCADE" json:"vitals,omitempty"`
+	Diagnoses    []diagnosis.Diagnosis      `gorm:"foreignKey:VisitID;constraint:OnDelete:CASCADE" json:"diagnoses,omitempty"`
+	Disposition  *disposition.Disposition   `gorm:"foreignKey:VisitID;constraint:OnDelete:CASCADE" json:"disposition,omitempty"`
 }

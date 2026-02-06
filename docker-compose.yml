@@ -10,6 +10,7 @@ services:
       - db
     command: ["sh", "/app/wait-for-db.sh", "db", "./main"]
 
+
   db:
     image: postgres:15-alpine
     container_name: ahadu-db

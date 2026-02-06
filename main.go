@@ -8,12 +8,19 @@ import (
 	"saas-api/modules/auth"
 	"saas-api/modules/branch"
 	"saas-api/modules/department"
+	"saas-api/modules/diagnosis"
+	"saas-api/modules/diagnosis_code"
+	"saas-api/modules/disposition"
 	"saas-api/modules/employee"
+	"saas-api/modules/observation"
 	"saas-api/modules/patient"
 	"saas-api/modules/patient_allergy"
 	"saas-api/modules/position"
+	"saas-api/modules/problem"
 	"saas-api/modules/user"
 	"saas-api/modules/visit"
+	"saas-api/modules/vital_record"
+	"saas-api/modules/vital_type"
 
 	"github.com/joho/godotenv"
 )
@@ -39,6 +46,13 @@ func main() {
 	app.RegisterModule(position.NewModule())
 	app.RegisterModule(employee.NewModule())
 	app.RegisterModule(visit.NewModule())
+	app.RegisterModule(observation.NewModule())
+	app.RegisterModule(vital_record.NewModule())
+	app.RegisterModule(problem.NewModule())
+	app.RegisterModule(vital_type.NewModule())
+	app.RegisterModule(diagnosis_code.NewModule())
+	app.RegisterModule(diagnosis.NewModule())
+	app.RegisterModule(disposition.NewModule())
 
 	// Initialize and Run
 	app.Init()

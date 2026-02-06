@@ -20,7 +20,4 @@ func RegisterRoutes(parentGroup *gin.RouterGroup, ctrl *VisitController) {
 		ResponseSchema: "visit.Visit",
 	})
 
-	// Custom endpoints for visit
-	group.POST("/observations", ctrl.AddObservation)
-	group.POST("/vitals", ctrl.AddVitalRecord)
 }

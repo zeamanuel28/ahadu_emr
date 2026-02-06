@@ -122,25 +122,26 @@ func generatePropertySchema(t reflect.Type, bindingTag string, visited map[refle
 
 	schema := make(map[string]interface{})
 
-	switch t.Kind() {
-	case reflect.String:
+	switch {
+	case t.Kind() == reflect.String:
 		schema["type"] = "string"
 		// Check for email validation
 		if strings.Contains(bindingTag, "email") {
 			schema["format"] = "email"
 		}
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+	case t.String() == "uuid.UUID":
+		schema["type"] = "string"
+		schema["format"] = "uuid"
+	case t.Kind() >= reflect.Int && t.Kind() <= reflect.Uint64:
 		schema["type"] = "integer"
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		schema["type"] = "integer"
-	case reflect.Float32, reflect.Float64:
+	case t.Kind() == reflect.Float32 || t.Kind() == reflect.Float64:
 		schema["type"] = "number"
-	case reflect.Bool:
+	case t.Kind() == reflect.Bool:
 		schema["type"] = "boolean"
-	case reflect.Slice, reflect.Array:
+	case t.Kind() == reflect.Slice || t.Kind() == reflect.Array:
 		schema["type"] = "array"
 		schema["items"] = generatePropertySchema(t.Elem(), "", visited)
-	case reflect.Struct:
+	case t.Kind() == reflect.Struct:
 		// Handle special types
 		if t == reflect.TypeOf(time.Time{}) {
 			schema["type"] = "string"
